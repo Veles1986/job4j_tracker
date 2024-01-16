@@ -2,9 +2,9 @@ package ru.job4j.oop;
 
 public class Error {
 
-    boolean active;
-    int status;
-    String message;
+    private boolean active;
+    private int status;
+    private String message;
 
     public Error() {
     }
@@ -15,6 +15,12 @@ public class Error {
         this.message = message;
     }
 
+    public void printInfo() {
+        System.out.println("Активный: " + active);
+        System.out.println("Статус: " + status);
+        System.out.println("Сообщение: " + message);
+    }
+
     public static void main(String[] args) {
         Error error1 = new Error();
         error1.printInfo();
@@ -22,11 +28,5 @@ public class Error {
         error2.printInfo();
         Error error3 = new Error(false, 123, "Server error");
         error3.printInfo();
-    }
-
-    public void printInfo() {
-        System.out.println("Активный: " + active);
-        System.out.println("Статус: " + status);
-        System.out.println("Сообщение: " + message);
     }
 }
