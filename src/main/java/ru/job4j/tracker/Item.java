@@ -32,17 +32,4 @@ public class Item {
         this.name = name;
     }
 
-    public void printInfo() {
-        System.out.println("ID: " + id);
-        System.out.println("Name: " + name);
-    }
-
-    public static void main(String[] args) {
-        Item item1 = new Item();
-        item1.printInfo();
-        Item item2 = new Item("Laptop");
-        item2.printInfo();
-        Item item3 = new Item(23, "cup");
-        item3.printInfo();
-    }
 }
