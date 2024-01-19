@@ -4,8 +4,7 @@ public class Reduce {
     private int[] array;
 
     public void to(int[] array) {
-        this.array = new int[array.length];
-        System.arraycopy(array, 0, this.array, 0, array.length);
+        this.array = array;
     }
 
     public void print() {
