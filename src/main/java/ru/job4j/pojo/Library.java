@@ -23,7 +23,7 @@ public class Library {
         }
         System.out.println("\nBooks with name \"Clean Code\":");
         for (int i = 0; i < books.length; i++) {
-            if (books[i].getName().equals("Clean Code")) {
+            if ("Clean Code".equals(books[i].getName())) {
                 System.out.println("Name of book " + (i + 1) + ": " + books[i].getName() + System.lineSeparator()
                         + "Number of pages: " + books[i].getNumberOfPages());
             }
