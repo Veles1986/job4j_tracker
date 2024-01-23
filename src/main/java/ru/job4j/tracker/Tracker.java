@@ -50,6 +50,7 @@ public class Tracker {
         boolean result = index != -1;
         if (result) {
             items[index] = item;
+            items[index].setId(id);
         }
         return result;
     }
