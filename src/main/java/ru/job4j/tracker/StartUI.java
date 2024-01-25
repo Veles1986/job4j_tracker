@@ -12,9 +12,14 @@ public class StartUI {
             String selectLine = scanner.nextLine();
             try {
                 int select = Integer.parseInt(selectLine);
-                if (select != 6) {
-                    System.out.println("Пользователь выбрал: " + select + System.lineSeparator());
-                } else {
+                if (select == 0) {
+                    System.out.println("=== Создание новой заявки ===");
+                    System.out.print("Введите имя: ");
+                    String name = scanner.nextLine();
+                    Item item = new Item(name);
+                    tracker.add(item);
+                    System.out.println("Добавленная заявка: " + item);
+                } else if (select == 6) {
                     run = false;
                 }
             } catch (NumberFormatException e) {
