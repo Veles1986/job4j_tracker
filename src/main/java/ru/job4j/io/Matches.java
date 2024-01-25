@@ -12,22 +12,19 @@ public class Matches {
             String player = turn ? "Первый игрок" : "Второй игрок";
             System.out.println(player + " введите число от 1 до 3:");
             int matches = Integer.parseInt(input.nextLine());
-            turn = !turn;
             if (matches <= count) {
                 switch (matches) {
                     case 1, 2, 3:
+                        turn = !turn;
                         count -= matches;
                         System.out.println("На столе осталось " + count + " спичек\n");
                         break;
                     default:
                         System.out.println("Неверный ввод. Введите число от 1 до 3!!!\n");
-                        turn = !turn;
                 }
             } else {
                 System.out.println("Неверный ввод. Нельзя вводить число больше чем количество оставшихся спичек!!!\n");
-                turn = !turn;
             }
-
         }
         if (!turn) {
             System.out.println("Выиграл первый игрок");
