@@ -10,44 +10,40 @@ public class StartUI {
             showMenu();
             System.out.print("Выбрать: ");
             String selectLine = scanner.nextLine();
-            try {
-                int select = Integer.parseInt(selectLine);
-                if (select == 0) {
-                    System.out.println("=== Создание новой заявки ===");
-                    System.out.print("Введите имя: ");
-                    String name = scanner.nextLine();
-                    Item item = new Item(name);
-                    tracker.add(item);
-                    System.out.println("Добавленная заявка: " + item);
-                } else if (select == 1) {
-                    System.out.println("=== Вывод всех заявок ===");
-                    Item[] items = tracker.findAll();
-                    if (items.length > 0) {
-                        for (Item item : items) {
-                            System.out.println(item);
-                        }
-                    } else {
-                        System.out.println("Хранилище еще не содержит заявок");
+            int select = Integer.parseInt(selectLine);
+            if (select == 0) {
+                System.out.println("=== Создание новой заявки ===");
+                System.out.print("Введите имя: ");
+                String name = scanner.nextLine();
+                Item item = new Item(name);
+                tracker.add(item);
+                System.out.println("Добавленная заявка: " + item);
+            } else if (select == 1) {
+                System.out.println("=== Вывод всех заявок ===");
+                Item[] items = tracker.findAll();
+                if (items.length > 0) {
+                    for (Item item : items) {
+                        System.out.println(item);
                     }
-                } else if (select == 2) {
-                    System.out.println("=== Редактирование заявки ===");
-                    System.out.print("Введите id: ");
-                    int id = Integer.parseInt(scanner.nextLine());
-                    System.out.print("Введите имя: ");
-                    String name = scanner.nextLine();
-                    Item item = new Item(name);
-                    if (tracker.replace(id, item)) {
-                        System.out.println("Заявка изменена успешно.");
-                    } else {
-                        System.out.println("Ошибка замены заявки.");
-                    }
-                } else if (select == 6) {
-                    run = false;
-                }
-                System.out.println();
-            } catch (NumberFormatException e) {
-                System.out.println("!!! - Неверный ввод. Введите число - !!!\n");
-            }
+                   } else {
+                       System.out.println("Хранилище еще не содержит заявок");
+                   }
+               } else if (select == 2) {
+                   System.out.println("=== Редактирование заявки ===");
+                   System.out.print("Введите id: ");
+                   int id = Integer.parseInt(scanner.nextLine());
+                   System.out.print("Введите имя: ");
+                   String name = scanner.nextLine();
+                   Item item = new Item(name);
+                   if (tracker.replace(id, item)) {
+                       System.out.println("Заявка изменена успешно.");
+                   } else {
+                       System.out.println("Ошибка замены заявки.");
+                   }
+               } else if (select == 6) {
+                   run = false;
+               }
+            System.out.println();
         }
     }
 
