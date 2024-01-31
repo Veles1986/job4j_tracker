@@ -72,7 +72,7 @@ public class StartUI {
             } else if (select == 6) {
                 run = false;
             }
-            System.out.println();
+            System.out.println("jjj");
         }
     }
 
