@@ -16,7 +16,7 @@ public class StartUI {
             } else if (select == 3) {
                 deleteItem(input, tracker);
             } else if (select == 4) {
-                finItemById(input, tracker);
+                findItemById(input, tracker);
             } else if (select == 5) {
                 findItemByName(input, tracker);
             } else if (select == 6) {
@@ -66,7 +66,7 @@ public class StartUI {
         System.out.println(item != null ? "Заявка удалена успешно." : "Ошибка удаления заявки.");
     }
 
-    public static void finItemById(Input input, Tracker tracker) {
+    public static void findItemById(Input input, Tracker tracker) {
         System.out.println("=== Вывод заявки по id ===");
         int id = input.askInt("Введите id: ");
         Item item = tracker.findById(id);
