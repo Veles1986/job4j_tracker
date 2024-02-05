@@ -25,7 +25,7 @@ class StartUITest {
         Tracker tracker = new Tracker();
         tracker.add(item);
         Input input = new MockInput(
-                new String[] {"0", "1", "New name", "1"}
+                new String[] {"0", String.valueOf(item.getId()), "New name", "1"}
         );
         UserAction[] actions = {
                 new ReplaceAction(),
@@ -41,14 +41,13 @@ class StartUITest {
         Tracker tracker = new Tracker();
         tracker.add(item);
         Input input = new MockInput(
-                new String[] {"0", "1", "1"}
+                new String[] {"0", String.valueOf(item.getId()), "1"}
         );
         UserAction[] actions = {
                 new DeleteAction(),
                 new ExitAction()
         };
         new StartUI().init(input, tracker, actions);
-        Item expected = null;
-        assertThat(expected).isEqualTo(tracker.findById(item.getId()));
+        assertThat(tracker.findById(item.getId())).isNull();
     }
 }
