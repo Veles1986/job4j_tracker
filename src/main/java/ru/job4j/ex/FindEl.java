@@ -11,6 +11,25 @@ public class FindEl {
         throw new ElementNotFoundException("Element not found");
     }
 
+    public static boolean sent(String value, String[] abuses) throws ElementAbuseException {
+        for (int i = 0; i < abuses.length; i++) {
+            if (value.equals(abuses[i])) {
+                throw new ElementAbuseException("Element does not match");
+            }
+        }
+        return true;
+    }
+
+    public static void process(String[] values, String key, String[] abuses) {
+        try {
+            if (indexOf(values, key) != -1) {
+                sent(key, abuses);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         String[] value = {"Василий", "Петр", "Николай", "Иван"};
         try {
