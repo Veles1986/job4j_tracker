@@ -16,18 +16,11 @@ public class PasswordValidator {
             );
         }
 
-        for (String string: FORBIDDEN) {
-            if (password.toLowerCase().contains(string)) {
-                throw new IllegalArgumentException(
-                        "Password shouldn't contain substrings: qwerty, 12345, password, admin, user"
-                );
-            }
-        }
-
         boolean hasUpCase = false;
         boolean hasLowCase = false;
         boolean hasDigit = false;
         boolean hasSpecial = false;
+
         for (char symbol : password.toCharArray()) {
             if (!hasLowCase && Character.isLowerCase(symbol)) {
                 hasLowCase = true;
@@ -41,27 +34,43 @@ public class PasswordValidator {
             if (!hasSpecial && !Character.isDigit(symbol) && !Character.isLetter(symbol)) {
                 hasSpecial = true;
             }
+            if (hasUpCase && hasLowCase && hasDigit && hasSpecial) {
+                break;
+            }
         }
+
         if (!hasUpCase) {
             throw new IllegalArgumentException(
                     "Password should contain at least one uppercase letter"
             );
         }
+
         if (!hasLowCase) {
             throw new IllegalArgumentException(
                     "Password should contain at least one lowercase letter"
             );
         }
+
         if (!hasDigit) {
             throw new IllegalArgumentException(
                     "Password should contain at least one figure"
             );
         }
+
         if (!hasSpecial) {
             throw new IllegalArgumentException(
                     "Password should contain at least one special symbol"
             );
         }
+
+        for (String string: FORBIDDEN) {
+            if (password.toLowerCase().contains(string)) {
+                throw new IllegalArgumentException(
+                        "Password shouldn't contain substrings: qwerty, 12345, password, admin, user"
+                );
+            }
+        }
+
         return password;
     }
 }
