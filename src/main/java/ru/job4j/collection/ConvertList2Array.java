@@ -13,10 +13,9 @@ public class ConvertList2Array {
             array[row][cell] = number;
             if (cell + 1 == cells) {
                 row++;
-                cell = 0;
-            } else {
-                cell++;
+                cell = -1;
             }
+            cell++;
         }
         return array;
     }
