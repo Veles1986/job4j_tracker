@@ -13,26 +13,16 @@ public class AppleStore {
     }
 
     public String getLastHappyCustomer() {
-        int number = 1;
-        for (int i = 0; i < queue.size();) {
-            if (number == count) {
-                return queue.peek().name();
-            }
+        for (int i = 0; i < count - 1; i++) {
             queue.poll();
-            number++;
         }
-        return "";
+        return queue.peek().name();
     }
 
     public String getFirstUpsetCustomer() {
-        int number = 1;
-        for (int i = 0; i < queue.size();) {
-            if (number > count) {
-                 return queue.peek().name();
-            }
+        for (int i = 0; i < count; i++) {
             queue.poll();
-            number++;
         }
-        return "";
+        return queue.peek().name();
     }
 }
