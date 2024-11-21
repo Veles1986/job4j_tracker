@@ -16,7 +16,7 @@ public class StartUI {
         this.output = output;
     }
 
-    public void init(Input input, Tracker tracker, List<UserAction> actions) {
+    public void init(Input input, Store memTracker, List<UserAction> actions) {
         boolean run = true;
         while (run) {
             showMenu(actions);
@@ -26,7 +26,7 @@ public class StartUI {
                 continue;
             }
             UserAction action = actions.get(select);
-            run = action.execute(input, tracker);
+            run = action.execute(input, memTracker);
         }
     }
 
@@ -41,7 +41,7 @@ public class StartUI {
         Output output = new ConsoleOutput();
         Input consoleInput = new ConsoleInput();
         Input validateInput = new ValidateInput(consoleInput, output);
-        Tracker tracker = new Tracker();
+        Store memTracker = new SqlTracker();
         List<UserAction> actions = List.of(
                 new CreateAction(output),
                 new FindAllAction(output),
@@ -51,6 +51,6 @@ public class StartUI {
                 new FindByNameAction(output),
                 new ExitAction(output)
         );
-        new StartUI(output).init(validateInput, tracker, actions);
+        new StartUI(output).init(validateInput, memTracker, actions);
     }
 }
