@@ -194,7 +194,7 @@ class StartUITest {
         Input input = new MockInput(
                 new String[] {"8", "0"}
         );
-        Store memTracker = new SqlTracker();
+        Store memTracker = new MemTracker();
         List<UserAction> actions = List.of(
                 new ExitAction(output)
         );
