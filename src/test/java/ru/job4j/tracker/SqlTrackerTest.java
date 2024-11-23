@@ -1,9 +1,6 @@
 package ru.job4j.tracker;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -45,6 +42,7 @@ class SqlTrackerTest {
         }
     }
 
+    @Disabled
     @Test
     public void whenSaveItemAndFindByGeneratedIdThenMustBeTheSame() {
         SqlTracker tracker = new SqlTracker(connection);

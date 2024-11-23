@@ -1,5 +1,7 @@
 package ru.job4j.tracker;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -22,6 +24,12 @@ public class Item {
     public Item(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Item(ResultSet resultSet) throws SQLException {
+        this.id = resultSet.getInt("id");
+        this.name = resultSet.getString("name");
+        this.created = resultSet.getTimestamp("created").toLocalDateTime();
     }
 
     public int getId() {

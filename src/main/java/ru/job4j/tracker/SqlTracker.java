@@ -20,7 +20,7 @@ public class SqlTracker implements Store {
 
     private void init() {
         try (InputStream input = SqlTracker.class.getClassLoader()
-                .getResourceAsStream("db/liquibase_test.properties")) {
+                .getResourceAsStream("db/liquibase.properties")) {
             Properties config = new Properties();
             config.load(input);
             Class.forName(config.getProperty("driver-class-name"));
@@ -43,11 +43,17 @@ public class SqlTracker implements Store {
 
     @Override
     public Item add(Item item) {
-        try (PreparedStatement statement =
-                     connection.prepareStatement("insert into items(name, created) values (?, ?)")) {
-            statement.setString(1, item.getName());
-            statement.setTimestamp(2, Timestamp.valueOf(item.getCreated()));
-            statement.execute();
+        try (PreparedStatement preparedStatement =
+                     connection.prepareStatement("INSERT INTO items(name, created) values (?, ?)",
+                             Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setString(1, item.getName());
+            preparedStatement.setTimestamp(2, Timestamp.valueOf(item.getCreated()));
+            preparedStatement.execute();
+            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    item.setId(generatedKeys.getInt(1));
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,9 +93,7 @@ public class SqlTracker implements Store {
                 connection.prepareStatement("select * from items")) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    Item item = new Item(resultSet.getInt("id"), resultSet.getString("name"));
-                    item.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
-                    items.add(item);
+                    items.add(createItem(resultSet));
                 }
             }
         } catch (Exception e) {
@@ -106,9 +110,7 @@ public class SqlTracker implements Store {
             statement.setString(1, key);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
-                    Item item = new Item(resultSet.getInt("id"), resultSet.getString("name"));
-                    item.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
-                    items.add(item);
+                    items.add(createItem(resultSet));
                 }
             }
         } catch (Exception e) {
@@ -124,14 +126,18 @@ public class SqlTracker implements Store {
                      connection.prepareStatement("select id, name, created from items where id = ?;")) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    item = new Item(resultSet.getInt("id"), resultSet.getString("name"));
-                    item.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
-                }
+                    item = createItem(resultSet);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return item;
+    }
+
+    private Item createItem(ResultSet resultSet) throws SQLException {
+        if (resultSet.next()) {
+            return new Item(resultSet);
+        }
+        return null;
     }
 }
