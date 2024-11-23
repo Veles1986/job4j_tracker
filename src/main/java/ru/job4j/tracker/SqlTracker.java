@@ -20,7 +20,7 @@ public class SqlTracker implements Store {
 
     private void init() {
         try (InputStream input = SqlTracker.class.getClassLoader()
-                .getResourceAsStream("db/liquibase.properties")) {
+                .getResourceAsStream("db/liquibase_test.properties")) {
             Properties config = new Properties();
             config.load(input);
             Class.forName(config.getProperty("driver-class-name"));
@@ -124,10 +124,9 @@ public class SqlTracker implements Store {
                      connection.prepareStatement("Select id, name, created from items where id = ?;")) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
+                if (resultSet.next()) {
                     item = new Item(resultSet.getInt("id"), resultSet.getString("name"));
                     item.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
-                    return item;
                 }
             }
         } catch (Exception e) {
